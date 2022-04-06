@@ -9,9 +9,12 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+
+import javax.swing.ImageIcon;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -22,7 +25,7 @@ import main.display.DisplayFrame;
 import main.display.DisplayKeyboard;
 import main.display.DisplayMenu;
 
-public class Main implements NativeKeyListener {
+public class Strokey implements NativeKeyListener {
 
 	private static DisplayKeyboard keyboard;
 	private static DisplayFrame frame;
@@ -39,7 +42,7 @@ public class Main implements NativeKeyListener {
 	public static boolean isKeyboard = false;
 
 	public static void main(String[] args) {
-		systemTray();
+		
 		LogManager.getLogManager().reset();
 		Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
 		logger.setLevel(Level.OFF);
@@ -49,7 +52,8 @@ public class Main implements NativeKeyListener {
 		} catch (NativeHookException e) {
 			e.printStackTrace();
 		}
-		GlobalScreen.addNativeKeyListener(new Main());
+		GlobalScreen.addNativeKeyListener(new Strokey());
+		new DisplayTrayIcon();
 
 	}
 
@@ -125,44 +129,6 @@ public class Main implements NativeKeyListener {
 			}
 		}
 
-	}
-
-	public static void systemTray() {
-		if (!SystemTray.isSupported()) {
-			System.out.println("System tray is not supported !!! ");
-			return;
-		}
-		SystemTray systemTray = SystemTray.getSystemTray();
-		Image image = Toolkit.getDefaultToolkit().getImage("src/images/31038.png");
-
-		PopupMenu trayPopupMenu = new PopupMenu();
-		MenuItem action = new MenuItem("Menu");
-		action.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				createMenu();
-			}
-		});
-		trayPopupMenu.add(action);
-
-		MenuItem close = new MenuItem("Close");
-		close.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		trayPopupMenu.add(close);
-
-		TrayIcon trayIcon = new TrayIcon(image, "KeyStroke", trayPopupMenu);
-		trayIcon.setImageAutoSize(true);
-
-		try {
-			systemTray.add(trayIcon);
-		} catch (AWTException awtException) {
-			awtException.printStackTrace();
-		}
-		System.out.println("end of main");
 	}
 
 	public static void keyboardCreate() {

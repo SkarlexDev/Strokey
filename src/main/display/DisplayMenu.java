@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import main.Main;
+import main.Strokey;
 import main.customswing.DefaultDialog;
 import main.customswing.DefaultLabel;
 import main.util.Art;
@@ -32,7 +32,7 @@ public class DisplayMenu extends Canvas {
 		displayKeyboard.setFont(Art.font);
 		displayKeyboard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.keyboardCreate();
+				Strokey.keyboardCreate();
 				menu.dispose();
 			}
 		});
@@ -42,7 +42,7 @@ public class DisplayMenu extends Canvas {
 		displayPress.setFont(Art.font);
 		displayPress.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.frameCreate();
+				Strokey.frameCreate();
 				menu.dispose();
 			}
 		});
@@ -60,7 +60,7 @@ public class DisplayMenu extends Canvas {
 
 	public void panelSettings() {
 		GridLayout grid = new GridLayout(0, 1);
-		DefaultLabel label = new DefaultLabel("Title");
+		DefaultLabel label = new DefaultLabel("Strokey");
 		panel.add(label);
 		panel.setLayout(grid);
 	}
